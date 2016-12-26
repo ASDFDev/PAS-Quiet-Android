@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">ATS</string>
+    <string name="transmit">Transmit</string>
+    <string name="receive">Receive</string>
+    <string name="ok">OK</string>
+    <string name="label_username">Username</string>
+    <string name="hint_username">Your SPICE user ID (e.g. P1234567)</string>
+    <string name="label_password">Password</string>
+    <string name="label_login">Login</string>
+    <string name="error_unknown">Unknown error, the app cannot continue. </string>
+    <string name="error_connection_invalid">Invalid connection type. </string>
+    <string name="please_wait">Please wait....</string>
+    <string name="title_sign_in_failed">Sign-in failed</string>
+    <string name="error_credentials_invalid">Invalid user ID or password. </string>
+    <string name="error_outside_sp">The ATS cannot be used outside SP. </string>
+    <string name="title_code_failed">Attendance submission failed</string>
+    <string name="error_timed_out">Session timed out. </string>
+    <string name="title_code">Attendance submission</string>
+    <string name="title_internal">Internal error</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="error_credentials_disappeared">Please enter your user ID and password. </string>
+    <string name="send">Send</string>
+</resources>
