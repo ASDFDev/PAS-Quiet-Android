@@ -42,7 +42,6 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
                     signInType = SignInType.Staff;
                     signInState = SignInResponse.SignedIn;
                     loggedInUserID = userID.toUpperCase();
-                    saveCredentials(userID, password);
                 } else if ((userID.toLowerCase().equals("p10000") ||
                         userID.toLowerCase().equals("p10001") ||
                         userID.toLowerCase().equals("p10002") ||
@@ -57,7 +56,6 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
                     signInType = SignInType.Student;
                     signInState = SignInResponse.SignedIn;
                     loggedInUserID = userID.toUpperCase();
-                    saveCredentials(userID, password);
                 } else {
                     signInState = SignInResponse.InvalidCredentials;
                 }

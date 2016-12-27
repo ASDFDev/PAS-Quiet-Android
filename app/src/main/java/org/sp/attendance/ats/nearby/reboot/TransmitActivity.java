@@ -1,8 +1,10 @@
 package org.sp.attendance.ats.nearby.reboot;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,7 @@ public class TransmitActivity extends AppCompatActivity {
 
 
     public void onSend(View view) {
+                changeVolume();
                 FrameTransmitterConfig transmitterConfig;
                 try{
                    transmitterConfig = new FrameTransmitterConfig(this, "audible");
@@ -102,4 +105,8 @@ public class TransmitActivity extends AppCompatActivity {
 
             }
         }
+    private void changeVolume(){
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 70, 0);
+    }
 }
