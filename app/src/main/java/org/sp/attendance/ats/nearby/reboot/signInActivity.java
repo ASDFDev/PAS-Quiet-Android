@@ -1,13 +1,18 @@
 package org.sp.attendance.ats.nearby.reboot;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -17,10 +22,14 @@ import android.widget.EditText;
 //TODO: call this activity on start instead of MainActivity...
 public class signInActivity extends AppCompatActivity{
 
+    private final int REQUEST_PERMISSION_RECORD_AUDIO=1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         setContentView(R.layout.activity_signin);
         super.onCreate(savedInstanceState);
+        showPermission();
     }
 
     public void signIn(View view) {
@@ -42,6 +51,50 @@ public class signInActivity extends AppCompatActivity{
         }
     }
 
+    private void showPermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+                showExplanation("Permission Needed","Permission is needed to transmit code", Manifest.permission.RECORD_AUDIO, REQUEST_PERMISSION_RECORD_AUDIO);
+            } else {
+                requestPermission(Manifest.permission.RECORD_AUDIO, REQUEST_PERMISSION_RECORD_AUDIO);
+            }
+        } else {
+            //yay
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String permissions[],
+            int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PERMISSION_RECORD_AUDIO:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //yay
+                } else {
+                    Toast.makeText(signInActivity.this, "Permission Denied! This app will not work", Toast.LENGTH_SHORT).show();
+
+                }
+        }
+    }
+
+    private void showExplanation(String title, String message, final String permission, final int permissionRequestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        requestPermission(permission, permissionRequestCode);
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void requestPermission(String permissionName, int permissionRequestCode) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{permissionName}, permissionRequestCode);
+    }
 
 }

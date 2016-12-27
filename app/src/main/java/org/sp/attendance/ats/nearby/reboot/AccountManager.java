@@ -16,7 +16,7 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
 
     // Pseudo-accounts manager, provides a small database of pre-set accounts for testing use
     // Can be replaced with actual connection code
-
+	
     public static String loggedInUserID;
 
     private ProgressDialog progressDialog;
@@ -43,17 +43,17 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
                     signInState = SignInResponse.SignedIn;
                     loggedInUserID = userID.toUpperCase();
                     saveCredentials(userID, password);
-                } else if ((userID.toLowerCase().equals("p1001000") ||
-                        userID.toLowerCase().equals("p1001001") ||
-                        userID.toLowerCase().equals("p1001002") ||
-                        userID.toLowerCase().equals("p1001003") ||
-                        userID.toLowerCase().equals("p1001004") ||
-                        userID.toLowerCase().equals("p1001005") ||
-                        userID.toLowerCase().equals("p1001006") ||
-                        userID.toLowerCase().equals("p1001007") ||
-                        userID.toLowerCase().equals("p1001008") ||
-                        userID.toLowerCase().equals("p1001009") ||
-                        userID.toLowerCase().equals("p1001010")) && password.equals("student")) {
+                } else if ((userID.toLowerCase().equals("p10000") ||
+                        userID.toLowerCase().equals("p10001") ||
+                        userID.toLowerCase().equals("p10002") ||
+                        userID.toLowerCase().equals("p10003") ||
+                        userID.toLowerCase().equals("p10004") ||
+                        userID.toLowerCase().equals("p10005") ||
+                        userID.toLowerCase().equals("p10006") ||
+                        userID.toLowerCase().equals("p10007") ||
+                        userID.toLowerCase().equals("p10008") ||
+                        userID.toLowerCase().equals("p10009") ||
+                        userID.toLowerCase().equals("p10010")) && password.equals("student")) {
                     signInType = SignInType.Student;
                     signInState = SignInResponse.SignedIn;
                     loggedInUserID = userID.toUpperCase();
@@ -170,15 +170,6 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
         }
     }
 
-    public void saveCredentials(String userID, String password) {
-        SharedPreferences sharedPref = globalContext.getSharedPreferences("org.sp.attendance.ats.nearby.reboot", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        if (sharedPref.getString("ats_userid", "").equals("") && sharedPref.getString("ats_pwd", "").equals("")) {
-            editor.putString("ats_userid", userID);
-            editor.putString("ats_pwd", password);
-            editor.commit();
-        }
-    }
 
     private String updateUI() {
         return result;
