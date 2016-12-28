@@ -37,6 +37,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.1'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
 //TODO: Compile quiet source library together with the app.
     compile project(':quiet-release')
 }

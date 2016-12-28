@@ -20,4 +20,11 @@
     <string name="dismiss">Dismiss</string>
     <string name="error_credentials_disappeared">Please enter your user ID and password. </string>
     <string name="send">Send</string>
+    <string name="no_permission">Permission Denied! This app will not work</string>
+    <string name="error">Error</string>
+    <string name="action_broadcasting">Broadcasting code to students...</string>
+    <string name="stop_broadcast">Stop Broadcast</string>
+    <string name="label_prompt_code">Enter ATS Code:</string>
+    <string name="broadcast">Broadcast</string>
+    <string name="label_cancel">Cancel</string>
 </resources>

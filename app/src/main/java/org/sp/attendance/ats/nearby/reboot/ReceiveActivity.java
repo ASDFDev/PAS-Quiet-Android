@@ -1,17 +1,10 @@
 package org.sp.attendance.ats.nearby.reboot;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-
-import org.quietmodem.Quiet.*;
-
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 import rx.Subscription;
@@ -33,6 +26,7 @@ public class ReceiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         subscribeToFrames();
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_receive);
     }
 
     private void subscribeToFrames() {

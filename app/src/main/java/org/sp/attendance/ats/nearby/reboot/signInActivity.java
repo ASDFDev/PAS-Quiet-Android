@@ -19,7 +19,6 @@ import android.widget.Toast;
  * Created by Daniel on 26/12/2016.
  */
 
-//TODO: call this activity on start instead of MainActivity...
 public class signInActivity extends AppCompatActivity{
 
     private final int REQUEST_PERMISSION_RECORD_AUDIO=1;
@@ -74,7 +73,8 @@ public class signInActivity extends AppCompatActivity{
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //yay
                 } else {
-                    Toast.makeText(signInActivity.this, "Permission Denied! This app will not work", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(signInActivity.this, R.string.no_permission, Toast.LENGTH_SHORT).show();
+                    System.exit(0);
 
                 }
         }

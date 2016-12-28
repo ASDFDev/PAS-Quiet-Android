@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 
 import org.quietmodem.Quiet.FrameTransmitter;
@@ -35,13 +36,15 @@ public class TransmitActivity extends AppCompatActivity {
     }
 
 
-    public void onSend(View view) {
+    public void startBroadcast(View view) {
                 changeVolume();
                 FrameTransmitterConfig transmitterConfig;
                 try{
                    transmitterConfig = new FrameTransmitterConfig(this, "ultrasonic-experimental");
                     transmitter = new FrameTransmitter(transmitterConfig);
                     hideKeyboard();
+                    (findViewById(R.id.layout_code_input)).setVisibility(ScrollView.GONE);
+                    (findViewById(R.id.layout_code_broadcasting)).setVisibility(ScrollView.VISIBLE);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -62,7 +65,7 @@ public class TransmitActivity extends AppCompatActivity {
                 }
     }
 
-    public void onStop(View view){
+    public void stopBroadcast(View view){
         Intent mainIntent = new Intent(this, signInActivity.class);
         startActivity(mainIntent);
         finish();
@@ -82,10 +85,10 @@ public class TransmitActivity extends AppCompatActivity {
         }
 
         private void send() {
-            String payload = ((EditText) findViewById(R.id.numberTextField)).getText().toString();
+            String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
             if (payload.matches("")) {
                 new AlertDialog.Builder(this)
-                        .setTitle("Error!")
+                        .setTitle(R.string.error)
                         .setMessage("You did not enter a code! Please try again")
                         .setCancelable(false)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -97,8 +100,8 @@ public class TransmitActivity extends AppCompatActivity {
                         .show();
             } else {
                 try {
+
                     transmitter.send(payload.getBytes());
-                    System.out.println(payload);
                 } catch (IOException e) {
                     System.out.println("our message might be too long or the transmit queue full");
                 }
@@ -107,6 +110,6 @@ public class TransmitActivity extends AppCompatActivity {
         }
     private void changeVolume(){
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 70, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 30, 0);
     }
 }
