@@ -39,7 +39,7 @@ public class TransmitActivity extends AppCompatActivity {
                 changeVolume();
                 FrameTransmitterConfig transmitterConfig;
                 try{
-                   transmitterConfig = new FrameTransmitterConfig(this, "audible");
+                   transmitterConfig = new FrameTransmitterConfig(this, "ultrasonic-experimental");
                     transmitter = new FrameTransmitter(transmitterConfig);
                     hideKeyboard();
                     new Thread(new Runnable() {
