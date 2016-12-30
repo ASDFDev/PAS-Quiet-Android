@@ -48,7 +48,8 @@ public class TransmitActivity extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            for (int i = 0; i < 10; i++){
+							// inifite loop
+                            for (int i = 0; i == i; i++){
                                 send();
                                 try{
                                     Thread.sleep(3000);
