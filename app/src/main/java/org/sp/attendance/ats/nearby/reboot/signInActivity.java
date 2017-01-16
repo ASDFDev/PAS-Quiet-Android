@@ -35,7 +35,7 @@ public class signInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         showPermission();
         context = this;
-        String ats_database_url = "ats.nearby.com";
+        String ats_database_url = "http://ats.nearby.com";
         CheckUrl url = new CheckUrl();
         url.execute(ats_database_url);
     }
