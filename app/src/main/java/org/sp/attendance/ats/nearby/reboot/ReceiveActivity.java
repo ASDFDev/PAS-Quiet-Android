@@ -1,16 +1,28 @@
 package org.sp.attendance.ats.nearby.reboot;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
+
 
 
 /**
@@ -21,6 +33,8 @@ import rx.subscriptions.Subscriptions;
 public class ReceiveActivity extends AppCompatActivity {
 
     private Subscription frameSubscription = Subscriptions.empty();
+    private Context context;
+    private static String deviceID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +46,57 @@ public class ReceiveActivity extends AppCompatActivity {
     private void subscribeToFrames() {
         frameSubscription.unsubscribe();
         frameSubscription = FrameReceiverObservable.create(this, "ultrasonic-experimental").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
-            new AlertDialog.Builder(this)
-                    .setTitle("Message Received!")
-                    .setMessage(new String(buf,Charset.forName("UTF-8")))
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                        }
-                    })
-                    .create()
-                    .show();
+//TODO REFRACTOR THIS, OMG....
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("ats.nearby.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            ApiManager apiManager = retrofit.create(ApiManager.class);
+            DatabaseModel databaseModel = new DatabaseModel();
+
+            databaseModel.setUsername("placeholder");
+            deviceID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            databaseModel.setDevice_id(deviceID);
+            databaseModel.setAttendance_code(new String(buf,Charset.forName("UTF-8")));
+
+            Call<DatabaseModel> databaseModelCall = apiManager.subscribeToFrames(databaseModel.getUsername(), databaseModel.getDevice_id(), databaseModel.getAttendance_code());
+
+            databaseModelCall.enqueue(new Callback<DatabaseModel>() {
+                @Override
+                public void onResponse(Call<DatabaseModel> call, Response<DatabaseModel> response) {
+
+                    new AlertDialog.Builder(context)
+                            .setTitle("Attendance Submitted!")
+                            .setMessage(new String(buf,Charset.forName("UTF-8")))
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+
+                @Override
+                public void onFailure(Call<DatabaseModel> call, Throwable t) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Submission failed!")
+                            .setMessage("")
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+            });
+
         }, error-> {
         });
     }
