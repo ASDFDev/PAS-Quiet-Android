@@ -14,9 +14,9 @@ import retrofit2.http.POST;
 public interface ApiManager {
     @FormUrlEncoded
     @POST("/AttendanceDatabase.php")
-    Call<DatabaseModel> subscribeToFrames(@Field("username") String username,
-                                          @Field("device_id") String device_id,
-                                          @Field("attendance_code") String attendance_code);
 
-
+    Call<DatabaseModel> insertDatabase(
+            @Field("username") String username,
+            @Field("device_id") String device_id,
+            @Field("attendance_code") String attendance_code);
 }

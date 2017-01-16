@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -46,26 +49,22 @@ public class ReceiveActivity extends AppCompatActivity {
     private void subscribeToFrames() {
         frameSubscription.unsubscribe();
         frameSubscription = FrameReceiverObservable.create(this, "ultrasonic-experimental").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
-
+        System.out.println("ATS CODE IS: " + new String(buf,Charset.forName("UTF-8")));
 //TODO REFRACTOR THIS, OMG....
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("ats.nearby.com")
+                    .baseUrl("http://ats.nearby.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
             ApiManager apiManager = retrofit.create(ApiManager.class);
             DatabaseModel databaseModel = new DatabaseModel();
 
-            databaseModel.setUsername("placeholder");
-            deviceID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-            databaseModel.setDevice_id(deviceID);
-            databaseModel.setAttendance_code(new String(buf,Charset.forName("UTF-8")));
+            databaseModel.setDatabase(AccountManager.loggedInUserID, deviceID , new String(buf,Charset.forName("UTF-8")));
 
-            Call<DatabaseModel> databaseModelCall = apiManager.subscribeToFrames(databaseModel.getUsername(), databaseModel.getDevice_id(), databaseModel.getAttendance_code());
-
+            Call<DatabaseModel> databaseModelCall = apiManager.insertDatabase(databaseModel.getUsername(), databaseModel.getDevice_id(), databaseModel.getAttendance_code());
             databaseModelCall.enqueue(new Callback<DatabaseModel>() {
                 @Override
                 public void onResponse(Call<DatabaseModel> call, Response<DatabaseModel> response) {
-
                     new AlertDialog.Builder(context)
                             .setTitle("Attendance Submitted!")
                             .setMessage(new String(buf,Charset.forName("UTF-8")))
@@ -97,9 +96,12 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
             });
 
+
+
+
+
         }, error-> {
         });
     }
-
 
 }

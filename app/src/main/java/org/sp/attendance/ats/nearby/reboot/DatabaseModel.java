@@ -9,36 +9,43 @@ import com.google.gson.annotations.SerializedName;
 public class DatabaseModel {
 
     @SerializedName("username")
-    private String username;
+    private String mUsername;
 
     @SerializedName("device_id")
-    private String device_id;
+    private String mDevice_id;
 
     @SerializedName("attendance_code")
-    private String attendance_code;
+     private String mAttendance_code;
 
-    public void setUsername(String username){
-        this.username = username;
+    void setUsername(String username){
+        this.mUsername = username;
     }
 
-    public void setDevice_id(String device_id){
-        this.device_id = device_id;
+    void setDevice_id(String device_id){
+        this.mDevice_id = device_id;
     }
 
-    public void setAttendance_code(String attendance_code){
-        this.attendance_code = attendance_code;
+    void setAttendance_code(String attendance_code){
+        this.mAttendance_code = attendance_code;
     }
 
-    public String getUsername(){
-        return username;
+    String getUsername(){
+        return mUsername;
     }
 
-    public String getDevice_id(){
-        return device_id;
+    String getDevice_id(){
+        return mDevice_id;
     }
 
-    public String getAttendance_code(){
-        return attendance_code;
+    String getAttendance_code(){
+        return mAttendance_code;
+    }
+
+
+    void setDatabase(String username, String device_id, String attendance_code){
+        this.mUsername = username;
+        this.mDevice_id = device_id;
+        this.mAttendance_code = attendance_code;
     }
 
 }
