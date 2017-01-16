@@ -27,4 +27,6 @@
     <string name="label_prompt_code">Enter ATS Code:</string>
     <string name="broadcast">Broadcast</string>
     <string name="label_cancel">Cancel</string>
+    <string name="click_here">Error! There is no database available.Click Here to find out more.</string>
+    <string name="here">Here</string>
 </resources>
