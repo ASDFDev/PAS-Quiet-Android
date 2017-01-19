@@ -80,13 +80,14 @@ public class TransmitActivity extends AppCompatActivity {
         finish();
         super.onPause();
     }
-        private void hideKeyboard () {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    private void hideKeyboard () {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
 
-        private void send() {
-            String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
+    private void send() {
+        String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
+            // FIXME: 19/1/2017
             if (payload.matches("")) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.error)

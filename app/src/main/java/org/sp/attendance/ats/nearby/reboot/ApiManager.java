@@ -1,8 +1,6 @@
 package org.sp.attendance.ats.nearby.reboot;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -14,9 +12,9 @@ import retrofit2.http.POST;
 public interface ApiManager {
     @FormUrlEncoded
     @POST("/AttendanceDatabase.php")
-
     Call<DatabaseModel> insertDatabase(
-            @Field("username") String username,
             @Field("device_id") String device_id,
+            @Field("username") String username,
             @Field("attendance_code") String attendance_code);
 }
+

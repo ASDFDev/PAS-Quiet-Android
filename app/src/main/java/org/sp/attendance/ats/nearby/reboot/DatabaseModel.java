@@ -8,26 +8,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class DatabaseModel {
 
-    @SerializedName("username")
-    private String mUsername;
-
     @SerializedName("device_id")
     private String mDevice_id;
 
+    @SerializedName("username")
+    private String mUsername;
+
     @SerializedName("attendance_code")
      private String mAttendance_code;
-
-    void setUsername(String username){
-        this.mUsername = username;
-    }
-
-    void setDevice_id(String device_id){
-        this.mDevice_id = device_id;
-    }
-
-    void setAttendance_code(String attendance_code){
-        this.mAttendance_code = attendance_code;
-    }
 
     String getUsername(){
         return mUsername;
@@ -41,10 +29,9 @@ public class DatabaseModel {
         return mAttendance_code;
     }
 
-
-    void setDatabase(String username, String device_id, String attendance_code){
-        this.mUsername = username;
+    void setDatabase(String device_id, String username, String attendance_code){
         this.mDevice_id = device_id;
+        this.mUsername = username;
         this.mAttendance_code = attendance_code;
     }
 

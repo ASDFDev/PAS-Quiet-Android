@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
+
 /**
  * Created by Daniel on 26/12/2016.
  */
@@ -32,12 +33,12 @@ public class signInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         setContentView(R.layout.activity_signin);
-        super.onCreate(savedInstanceState);
         showPermission();
         context = this;
         String ats_database_url = "http://ats.nearby.com";
         CheckUrl url = new CheckUrl();
         url.execute(ats_database_url);
+        super.onCreate(savedInstanceState);
     }
 
     public void signIn(View view) {
@@ -80,6 +81,7 @@ public class signInActivity extends AppCompatActivity {
                     //yay
                 } else {
                     Toast.makeText(signInActivity.this, R.string.no_permission, Toast.LENGTH_SHORT).show();
+                    finish();
                     System.exit(0);
 
                 }

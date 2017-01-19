@@ -40,6 +40,8 @@ dependencies {
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.0.0-beta3'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
     //TODO: Compile quiet source library together with the app.
     compile project(':quiet-release')
 }

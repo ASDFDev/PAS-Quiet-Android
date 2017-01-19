@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 
@@ -14,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 
 public class AccountManager extends AsyncTask<String, Integer, String> {
 
+    //TODO: Deprecate / Remove this interface. Authenticate via backend instead.
     // Pseudo-accounts manager, provides a small database of pre-set accounts for testing use
     // Can be replaced with actual connection code
 	
