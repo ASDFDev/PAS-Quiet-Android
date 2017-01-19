@@ -53,4 +53,4 @@ Personally, I am using [Pi-hole](https://pi-hole.net/) as my DNS server. I simpl
 
 That's it. 
 
-
+Special thanks to Mr. Teo Shin Jen my lecturer for guidance in this project. Let's not forget about Mr. Brian Armstrong for quiet library, which was essential for the project.
