@@ -1,1 +1,2 @@
-include ':app', ':quiet-release'
+include ':app', ':quiet'
+project(':quiet').projectDir = new File('org.quietmodem.Quiet/quiet')
