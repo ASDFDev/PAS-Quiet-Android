@@ -4,29 +4,39 @@
 
 ## Background Information
  
-The project was written to combat attendance fraud in Singapore Polytechnic. Every the start of every lesson, the lecturer will generate a One Time Pin(OTP) and display it on the projector
+The project was written to combat attendance fraud in Singapore Polytechnic. Every the start of every lesson, the lecturer will generate 
 
-in plain text. Students will then submit the OTP to a HRMS portal and they will be marked present for the lesson. Obviously this is flawed since students are able to help submit the attendance
+a One Time Pin(OTP) and display it on the projector in plain text. Students will then submit the OTP to a HRMS portal and they will be 
 
-code for their friends by sharing their account credentials. Lecturers will waste time occasionally by checking for fraud. It defeats the purpose of marking the attendance electronically. 
+marked present for the lesson. Obviously this is flawed since students are able to help submit the attendance code for their friends by 
 
-Instead of doing nothing but complain and whine or making a useless [petition](https://www.change.org/p/mr-tan-choon-shian-ms-georgina-phua-stopspatssystem), why not do something about it?
+sharing their account credentials. Lecturers will waste time occasionally by checking for fraud. It defeats the purpose of marking the 
+
+attendance electronically. Instead of doing nothing but complain and whine or making a useless [petition](https://www.change.org/p/mr-tan-choon-shian-ms-georgina-phua-stopspatssystem), why not do something about it?
  
 ## About This Project
 
-This project was a forked of our previous project[(ATS_Nearby)](https://github.com/emansih/ATS_Nearby). The current project uses WiFi and ultrasound to take student's attendance. You may notice
+This project was a forked of our previous project[(ATS_Nearby)](https://github.com/emansih/ATS_Nearby). The current project uses WiFi 
 
-that bluetooth is no longer required since pairing increases friction in User Experience(UX). The previous project was using Google's proprietary Nearby API. The API itself isn't bad. However, 
+and ultrasound to take student's attendance. You may notice that bluetooth is no longer required since pairing increases friction in 
 
-there were limitations in what the API could do. Nearby API had a restriction on the number of API calls you can call in a period of time and it relies on Google Play services. With a reliance 
+User Experience(UX). The previous project was using Google's proprietary Nearby API. The API itself isn't bad. However, there were 
 
-on Google Play Services, it means that it will never be able to truly run on all platforms. It defeated the purpose of our original goal which is 
+limitations in what the API could do. Nearby API had a restriction on the number of API calls you can call in a period of time and it 
+
+relies on Google Play services. With a reliance on Google Play Services, it means that it will never be able to truly run on all 
+
+platforms. It defeated the purpose of our original goal which is 
 
 > to build the software with compatability in mind
 
-In theory, this software should be able to run on Amazon Fire devices or any non-certified [GMS devices](https://www.android.com/gms/). [^1] The web version written in Javascript is coming soon.
+In theory, this software should be able to run on Amazon Fire devices or any non-certified [GMS devices](https://www.android.com/gms/). 
 
-This sofware has also moved away from Firebase's BaaS to a self hosted BaaS instance. This allows the user / organization to better control the data flowing out of the network. 
+The web version written in Javascript is coming soon.
+
+This sofware has also moved away from Firebase's BaaS to a self hosted BaaS instance. This allows the user / organization to better 
+
+control the data flowing out of the network. 
 
 ## How to get this project running on my device?!
 
