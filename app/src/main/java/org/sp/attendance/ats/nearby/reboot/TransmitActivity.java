@@ -2,16 +2,15 @@ package org.sp.attendance.ats.nearby.reboot;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 
 import org.quietmodem.Quiet.FrameTransmitter;
@@ -28,6 +27,7 @@ public class TransmitActivity extends AppCompatActivity {
 
 
     private FrameTransmitter transmitter;
+    String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,33 +37,38 @@ public class TransmitActivity extends AppCompatActivity {
 
 
     public void startBroadcast(View view) {
-                changeVolume();
-                FrameTransmitterConfig transmitterConfig;
-                try{
-                   transmitterConfig = new FrameTransmitterConfig(this, "ultrasonic-experimental");
-                    transmitter = new FrameTransmitter(transmitterConfig);
-                    hideKeyboard();
-                    (findViewById(R.id.layout_code_input)).setVisibility(ScrollView.GONE);
-                    (findViewById(R.id.layout_code_broadcasting)).setVisibility(ScrollView.VISIBLE);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-							// inifite loop
-                            for (int i = 0; i == i; i++){
-                                send();
-                                try{
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException ie){
-                                    System.out.println("got interrupted!");
-                                }
+        // What abomination is this
+        if (payload.matches("")) {
+            Toast.makeText(getApplicationContext(), "You did not enter a code!", Toast.LENGTH_LONG).show();
+        } else {
+            changeVolume();
+            FrameTransmitterConfig transmitterConfig;
+            try {
+                transmitterConfig = new FrameTransmitterConfig(this, "ultrasonic-experimental");
+                transmitter = new FrameTransmitter(transmitterConfig);
+                hideKeyboard();
+                (findViewById(R.id.layout_code_input)).setVisibility(ScrollView.GONE);
+                (findViewById(R.id.layout_code_broadcasting)).setVisibility(ScrollView.VISIBLE);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // inifite loop
+                        for (int i = 0; i == i; i++) {
+                            send();
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ie) {
+                                System.out.println("got interrupted!");
                             }
                         }
-                    }).start();
-                } catch(ModemException me){
-                    System.out.println("Modem Exception");
-                } catch (IOException ioe){
-                    System.out.println("IOException thrown");
-                }
+                    }
+                }).start();
+            } catch (ModemException me) {
+                System.out.println("Modem Exception");
+            } catch (IOException ioe) {
+                System.out.println("IOException thrown");
+            }
+        }
     }
 
     public void stopBroadcast(View view){
@@ -86,30 +91,13 @@ public class TransmitActivity extends AppCompatActivity {
         }
 
     private void send() {
-        String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
-            // FIXME: 19/1/2017
-            if (payload.matches("")) {
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.error)
-                        .setMessage("You did not enter a code! Please try again")
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        })
-                        .create()
-                        .show();
-            } else {
                 try {
-
                     transmitter.send(payload.getBytes());
                 } catch (IOException e) {
                     System.out.println("our message might be too long or the transmit queue full");
                 }
-
             }
-        }
+
     private void changeVolume(){
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 30, 0);
