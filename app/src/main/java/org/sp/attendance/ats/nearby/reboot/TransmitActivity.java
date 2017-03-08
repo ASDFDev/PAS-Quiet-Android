@@ -69,7 +69,7 @@ public class TransmitActivity extends AppCompatActivity {
                         .setTitle(R.string.error)
                         .setMessage("Unfortunately your device does not support modulation")
                         .setCancelable(false)
-                        .setPositiveButton(R.string.here, (dialog,which) ->
+                        .setPositiveButton(android.R.string.ok, (dialog,which) ->
                         {
                             finish();
                         })
