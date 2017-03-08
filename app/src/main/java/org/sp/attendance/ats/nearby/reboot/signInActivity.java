@@ -45,6 +45,7 @@ public class signInActivity extends AppCompatActivity {
         if (!((EditText) findViewById(R.id.textEdit_userID)).getText().toString().equals("") && !((EditText) findViewById(R.id.textEdit_password)).getText().toString().equals("")) {
             new AccountManager(signInActivity.this).execute("SignInOnly", ((EditText) findViewById(R.id.textEdit_userID)).getText().toString(),
                     ((EditText) findViewById(R.id.textEdit_password)).getText().toString());
+            finish();
         } else {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.title_sign_in_failed)

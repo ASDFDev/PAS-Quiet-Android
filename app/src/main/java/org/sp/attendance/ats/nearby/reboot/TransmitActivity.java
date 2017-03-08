@@ -1,6 +1,7 @@
 package org.sp.attendance.ats.nearby.reboot;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -64,7 +65,16 @@ public class TransmitActivity extends AppCompatActivity {
                     }
                 }).start();
             } catch (ModemException me) {
-                System.out.println("Modem Exception");
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.error)
+                        .setMessage("Unfortunately your device does not support modulation")
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.here, (dialog,which) ->
+                        {
+                            finish();
+                        })
+                        .create()
+                        .show();
             } catch (IOException ioe) {
                 System.out.println("IOException thrown");
             }
@@ -78,12 +88,12 @@ public class TransmitActivity extends AppCompatActivity {
     }
     public void onDestroy() {
         super.onDestroy();
-        System.exit(0);
+        finish();
     }
 
     public void onPause(){
-        finish();
         super.onPause();
+        finish();
     }
     private void hideKeyboard () {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
