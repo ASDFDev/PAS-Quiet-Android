@@ -1,2 +1,2 @@
 include ':app', ':quiet'
-project(':quiet').projectDir = new File('org.quietmodem.Quiet/quiet')
+project(':quiet').projectDir = new File('../../quiet/android/quiet')

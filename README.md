@@ -16,10 +16,16 @@ In theory, this software should be able to run on Amazon Fire devices or any non
 
 ## How to get this project running on my device?!
 
-1. Clone this repository.
-2. run `git submodule update --init --recursive` at the root of this project
-3. Start building the project!
-4. You will also need my php code, please refer to this [repository](https://github.com/emansih/ATS_Backend). 
+Easy: 
+```bash
+$ repo init -u git@github.com:Proximity-Attendance-System/Repo-Manifest.git && repo sync
+```
+
+Advance:
+1. Download this repo
+2. Download Quiet(msequence_ordering) `git clone https://github.com/quiet/org.quietmodem.Quiet.git -b msequence_ordering`
+
+Place Quiet in the following hierarchy order. `../../quiet/android/quiet` **OR** edit [settings.gradle](settings.gradle)
 
 ###### IMPORTANT NOTE: The app itself will point to ats.nearby.com by default. Either change the url or edit your hosts file and point to ats.nearby.com
 
