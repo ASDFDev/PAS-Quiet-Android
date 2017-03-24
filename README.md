@@ -17,7 +17,7 @@ In theory, this software should be able to run on Amazon Fire devices or any non
 ## How to get this project running on my device?!
 
 1. Clone this repository.
-2. Clone quiet's [repository](https://github.com/quiet/org.quietmodem.Quiet) in the root of this project
+2. run `git submodule update --init --recursive` at the root of this project
 3. Start building the project!
 4. You will also need my php code, please refer to this [repository](https://github.com/emansih/ATS_Backend). 
 
