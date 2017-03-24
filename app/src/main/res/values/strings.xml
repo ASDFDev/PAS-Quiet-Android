@@ -1,4 +1,5 @@
 <resources>
+    <string name="base_url">http://ats.nearby.com.sg</string>
     <string name="app_name">ATS</string>
     <string name="transmit">Transmit</string>
     <string name="receive">Receive</string>

@@ -55,7 +55,7 @@ public class ReceiveActivity extends AppCompatActivity {
             */
 //TODO REFRACTOR THIS, OMG....
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ats.nearby.com")
+                    .baseUrl(getResources().getString(R.string.base_url))
                     // Enable the next line for debugging network
                     //.client(client.build())
                     .addConverterFactory(GsonConverterFactory.create())

@@ -27,7 +27,7 @@ Advance:
 
 Place Quiet in the following hierarchy order. `../../quiet/android/quiet` **OR** edit [settings.gradle](settings.gradle)
 
-###### IMPORTANT NOTE: The app itself will point to ats.nearby.com by default. Either change the url or edit your hosts file and point to ats.nearby.com
+###### IMPORTANT NOTE: The app itself will point to ats.nearby.com.sg by default. Either change the url or edit your hosts file and point to ats.nearby.com.sg
 
 Personally, I am using [Pi-hole](https://pi-hole.net/) as my DNS server. I simply edit the host file on my Raspberry Pi and add in  `192.168.1.29 ats.nearby.com`. 
 
