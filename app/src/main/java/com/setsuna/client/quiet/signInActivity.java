@@ -1,4 +1,4 @@
-package org.sp.attendance.ats.nearby.reboot;
+package com.setsuna.client.quiet;
 
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;

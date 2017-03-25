@@ -1,6 +1,6 @@
 <resources>
-    <string name="base_url">http://ats.nearby.com.sg</string>
-    <string name="app_name">ATS</string>
+    <string name="base_url">http://setsuna.asdf.com</string>
+    <string name="app_name">Setsuna</string>
     <string name="transmit">Transmit</string>
     <string name="receive">Receive</string>
     <string name="ok">OK</string>

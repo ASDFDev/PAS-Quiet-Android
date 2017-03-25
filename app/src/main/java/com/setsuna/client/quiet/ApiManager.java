@@ -1,4 +1,4 @@
-package org.sp.attendance.ats.nearby.reboot;
+package com.setsuna.client.quiet;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
