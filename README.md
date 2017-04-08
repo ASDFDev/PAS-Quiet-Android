@@ -29,7 +29,7 @@ Place Quiet in the following hierarchy order. `../../quiet/android/quiet` **OR**
 
 ###### IMPORTANT NOTE: The app itself will point to http://setsuna.asdf.com by default. Either change the url or edit your hosts file and point to setsuna.asdf.com
 
-Personally, I am using [Pi-hole](https://pi-hole.net/) as my DNS server. I simply edit the host file on my Raspberry Pi and add in  `192.168.1.29 ats.nearby.com`. 
+Personally, I am using [Pi-hole](https://pi-hole.net/) as my DNS server. I simply edit the host file on my Raspberry Pi and add in  `192.168.1.29 setsuna.asdf.com`. 
 
 `192.168.1.29` is my VM running the LAMP stack. 
 

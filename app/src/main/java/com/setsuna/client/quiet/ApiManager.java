@@ -11,10 +11,17 @@ import retrofit2.http.POST;
 
 public interface ApiManager {
     @FormUrlEncoded
-    @POST("/AttendanceDatabase.php")
-    Call<DatabaseModel> insertDatabase(
+    @POST("/SubmitAttendance.php")
+    Call<ModelSerializer> insertDatabase(
             @Field("device_id") String device_id,
             @Field("username") String username,
             @Field("attendance_code") String attendance_code);
+
+    @FormUrlEncoded
+    @POST("/login.php")
+    Call<ModelSerializer>signIn(
+            @Field("username") String username,
+            @Field("password") String password);
+
 }
 

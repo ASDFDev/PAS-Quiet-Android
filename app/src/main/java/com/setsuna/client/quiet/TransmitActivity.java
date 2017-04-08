@@ -28,7 +28,6 @@ public class TransmitActivity extends AppCompatActivity {
 
 
     private FrameTransmitter transmitter;
-    String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,11 @@ public class TransmitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transmit);
     }
 
-
+    // 9 April 2017: This is really bad code and we should do something about it
+    // Let's see how long this stays here....
+    // TODO: Decouple UI and logic code.
     public void startBroadcast(View view) {
-        // What abomination is this
+        String payload = ((EditText) findViewById(R.id.textCode)).getText().toString();
         if (payload.matches("")) {
             Toast.makeText(getApplicationContext(), "You did not enter a code!", Toast.LENGTH_LONG).show();
         } else {
@@ -55,9 +56,13 @@ public class TransmitActivity extends AppCompatActivity {
                     public void run() {
                         // inifite loop
                         for (int i = 0; i == i; i++) {
-                            send();
                             try {
-                                Thread.sleep(3000);
+                                transmitter.send(payload.getBytes());
+                            } catch (IOException e) {
+                                System.out.println("our message might be too long or the transmit queue full");
+                            }
+                            try {
+                                Thread.sleep(1000);
                             } catch (InterruptedException ie) {
                                 System.out.println("got interrupted!");
                             }
@@ -99,14 +104,6 @@ public class TransmitActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         }
-
-    private void send() {
-                try {
-                    transmitter.send(payload.getBytes());
-                } catch (IOException e) {
-                    System.out.println("our message might be too long or the transmit queue full");
-                }
-            }
 
     private void changeVolume(){
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
