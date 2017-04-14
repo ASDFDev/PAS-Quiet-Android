@@ -20,7 +20,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public class StudentTest {
 
-    private static final String student_username = "s10001";
+    private static final String student_username = "p10001";
     private static final String student_password = "student";
 
     @Rule

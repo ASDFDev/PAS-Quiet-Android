@@ -10,7 +10,7 @@
     <string name="label_login">Login</string>
     <string name="error_unknown">Unknown error, the app cannot continue. </string>
     <string name="error_connection_invalid">Invalid connection type. </string>
-    <string name="please_wait">Please wait....</string>
+    <string name="please_wait">Please wait...</string>
     <string name="title_sign_in_failed">Sign-in failed</string>
     <string name="error_credentials_invalid">Invalid user ID or password. </string>
     <string name="error_outside_sp">The ATS cannot be used outside SP. </string>
@@ -22,12 +22,12 @@
     <string name="error_credentials_disappeared">Please enter your user ID and password. </string>
     <string name="send">Send</string>
     <string name="no_permission">Permission Denied! This app will not work</string>
-    <string name="error">Error</string>
+    <string name="error">Error! </string>
     <string name="action_broadcasting">Broadcasting code to students...</string>
     <string name="stop_broadcast">Stop Broadcast</string>
     <string name="label_prompt_code">Enter ATS Code:</string>
     <string name="broadcast">Broadcast</string>
     <string name="label_cancel">Cancel</string>
-    <string name="click_here">Error! There is no database available.Click Here to find out more.</string>
+    <string name="click_here">There is no database available.Click Here to find out more.</string>
     <string name="here">Here</string>
 </resources>

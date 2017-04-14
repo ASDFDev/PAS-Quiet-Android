@@ -1,13 +1,12 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.util;
+
+import com.setsuna.client.quiet.ModelSerializer;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-/**
- * Created by Daniel on 15/1/2017.
- */
 
 public interface ApiManager {
     @FormUrlEncoded

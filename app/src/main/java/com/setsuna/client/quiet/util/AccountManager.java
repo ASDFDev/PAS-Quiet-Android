@@ -1,4 +1,4 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,9 +7,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 
-/**
- * Created by Daniel on 26/12/2016.
- */
+import com.setsuna.client.quiet.R;
+import com.setsuna.client.quiet.ReceiveActivity;
+import com.setsuna.client.quiet.TransmitActivity;
+
 
 public class AccountManager extends AsyncTask<String, Integer, String> {
 

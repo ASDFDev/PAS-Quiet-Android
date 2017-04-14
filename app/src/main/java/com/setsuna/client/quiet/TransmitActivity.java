@@ -20,9 +20,6 @@ import org.quietmodem.Quiet.ModemException;
 
 import java.io.IOException;
 
-/**
- * Created by Daniel on 26/12/2016.
- */
 
 public class TransmitActivity extends AppCompatActivity {
 

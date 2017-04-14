@@ -10,9 +10,6 @@ import java.net.SocketTimeoutException;
 import rx.Observable;
 import rx.Subscription;
 
-/**
- * Created by Daniel on 27/12/2016.
- */
 
 public class FrameReceiverObservable {
     private static final int TIEMOUT = 30;
