@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransmitActivity"
+        <activity android:name=".student.TransmitActivity"
             android:label="@string/transmit">
         </activity>
-        <activity android:name=".ReceiveActivity"
+        <activity android:name=".lecturer.ReceiveActivity"
             android:label="@string/receive">
         </activity>
     </application>

@@ -8,8 +8,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 
 import com.setsuna.client.quiet.R;
-import com.setsuna.client.quiet.ReceiveActivity;
-import com.setsuna.client.quiet.TransmitActivity;
+import com.setsuna.client.quiet.lecturer.ReceiveActivity;
+import com.setsuna.client.quiet.student.TransmitActivity;
 
 
 public class AccountManager extends AsyncTask<String, Integer, String> {
@@ -24,9 +24,9 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
     private Context globalContext;
     private String result;
     private SignInResponse signInState;
-    private CodeResponse codeState;
     private SignInType signInType;
     private String connectionType;
+    private ActivityUtil activityUtil = new ActivityUtil(globalContext);
 
     public AccountManager(Context context) {
         globalContext = context;
@@ -80,110 +80,41 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result1) {
-        try {
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
-            }
-            if (connectionType.equals("SignInOnly")) {
-                if (signInState.equals(SignInResponse.SignedIn)) {
-                    if (signInType == SignInType.Student) {
-                        Intent receiveIntent = new Intent(globalContext, ReceiveActivity.class);
-                        globalContext.startActivity(receiveIntent);
-                    } else if (signInType == SignInType.Staff) {
-                        Intent transmitIntent = new Intent(globalContext, TransmitActivity.class);
-                        globalContext.startActivity(transmitIntent);
-                    }
-                    updateUI();
-                } else if (signInState.equals(SignInResponse.InvalidCredentials)) {
-                    new AlertDialog.Builder(globalContext)
-                            .setTitle(R.string.title_sign_in_failed)
-                            .setMessage(R.string.error_credentials_invalid)
-                            .setCancelable(false)
-                            .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .create()
-                            .show();
-                } else if (signInState.equals(SignInResponse.OutsideSP)) {
-                    new AlertDialog.Builder(globalContext)
-                            .setTitle(R.string.title_sign_in_failed)
-                            .setMessage(R.string.error_outside_sp)
-                            .setCancelable(false)
-                            .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .create()
-                            .show();
-                } else if (signInState.equals(null) && codeState.equals(CodeResponse.NotSignedIn)) {
-                    new AlertDialog.Builder(globalContext)
-                            .setTitle(R.string.title_code_failed)
-                            .setMessage(R.string.error_timed_out)
-                            .setCancelable(false)
-                            .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .create()
-                            .show();
-                } else {
-                    new AlertDialog.Builder(globalContext)
-                            .setTitle(R.string.title_code)
-                            .setMessage(globalContext.getResources().getString(R.string.error_unknown) + "\n\n" + result)
-                            .setCancelable(false)
-                            .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .create()
-                            .show();
-                }
-            } else {
-                new AlertDialog.Builder(globalContext)
-                        .setTitle(R.string.title_internal)
-                        .setCancelable(false)
-                        .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .create()
-                        .show();
-            }
-        } catch (Exception e) {
-            new AlertDialog.Builder(globalContext)
-                    .setMessage(e.toString())
-                    .setCancelable(false)
-                    .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .create()
-                    .show();
-        }
-    }
 
+                if (connectionType.equals("SignInOnly")) {
+                    if (signInState.equals(SignInResponse.SignedIn)) {
+                        if (signInType == SignInType.Student) {
+                           activityUtil.goToTransmit();
+                        } else if (signInType == SignInType.Staff) {
+                            activityUtil.goToReceive();
+                        }
+                        updateUI();
+                    } else if (signInState.equals(SignInResponse.InvalidCredentials)) {
+                        new AlertDialog.Builder(globalContext)
+                                .setTitle(R.string.title_sign_in_failed)
+                                .setMessage(R.string.error_credentials_invalid)
+                                .setCancelable(false)
+                                .setPositiveButton(globalContext.getResources().getString(R.string.dismiss), (dialog, which) -> {
+                                })
+                                .create()
+                                .show();
+                    }
+                }
+            }
+    }
 
     private String updateUI() {
         return result;
     }
 
-    private enum CodeResponse {
-        Submitted, InvalidCode, NotEnrolled, AlreadySubmitted, ClassEnded, NotSignedIn, OutsideSP, Unknown
-    }
-
     private enum SignInResponse {
-        SignedIn, InvalidCredentials, OutsideSP, Unknown
+        SignedIn, InvalidCredentials, Unknown
     }
 
     private enum SignInType {
-        Staff, Student, Guest
+        Staff, Student
     }
 
 }

@@ -30,4 +30,6 @@
     <string name="label_cancel">Cancel</string>
     <string name="click_here">There is no database available.Click Here to find out more.</string>
     <string name="here">Here</string>
+    <string name="modem_exception">Unfortunately your device does not support modulation</string>
+    <string name="quiet_profile">ultrasonic-experimental</string>
 </resources>

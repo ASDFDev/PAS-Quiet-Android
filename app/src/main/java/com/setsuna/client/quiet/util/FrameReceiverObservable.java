@@ -1,4 +1,4 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.util;
 
 import android.content.Context;
 

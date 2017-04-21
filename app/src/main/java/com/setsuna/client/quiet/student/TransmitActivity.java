@@ -1,4 +1,4 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.student;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +14,11 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 
+import com.setsuna.client.quiet.R;
+import com.setsuna.client.quiet.signInActivity;
+import com.setsuna.client.quiet.util.ActivityUtil;
+import com.setsuna.client.quiet.util.TransmitUtil;
+
 import org.quietmodem.Quiet.FrameTransmitter;
 import org.quietmodem.Quiet.FrameTransmitterConfig;
 import org.quietmodem.Quiet.ModemException;
@@ -23,13 +28,20 @@ import java.io.IOException;
 
 public class TransmitActivity extends AppCompatActivity {
 
-
+    private Context context;
     private FrameTransmitter transmitter;
+    private FrameTransmitterConfig transmitterConfig;
+    private TransmitUtil transmitUtil = new TransmitUtil(context);
+    private ActivityUtil activityUtil = new ActivityUtil(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transmit);
+    }
+
+    public TransmitActivity(Context context){
+        this.context = context;
     }
 
     // 9 April 2017: This is really bad code and we should do something about it
@@ -40,36 +52,29 @@ public class TransmitActivity extends AppCompatActivity {
         if (payload.matches("")) {
             Toast.makeText(getApplicationContext(), "You did not enter a code!", Toast.LENGTH_LONG).show();
         } else {
-            changeVolume();
-            FrameTransmitterConfig transmitterConfig;
+            transmitUtil.changeVolume();
             try {
-                transmitterConfig = new FrameTransmitterConfig(this, "ultrasonic-experimental");
+                transmitterConfig = new FrameTransmitterConfig(context, context.getResources().getString(R.string.quiet_profile));
                 transmitter = new FrameTransmitter(transmitterConfig);
-                hideKeyboard();
+                transmitUtil.hideKeyboard();
                 (findViewById(R.id.layout_code_input)).setVisibility(ScrollView.GONE);
                 (findViewById(R.id.layout_code_broadcasting)).setVisibility(ScrollView.VISIBLE);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // inifite loop
-                        for (int i = 0; i == i; i++) {
-                            try {
-                                transmitter.send(payload.getBytes());
-                            } catch (IOException e) {
-                                System.out.println("our message might be too long or the transmit queue full");
-                            }
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException ie) {
-                                System.out.println("got interrupted!");
-                            }
+                new Thread(() -> {
+                    // inifite loop
+                    for (int i = 0; i == i; i++) {
+                        try {
+                            transmitter.send(payload.getBytes());
+                        } catch (IOException e) {
+                            System.out.println("our message might be too long or the transmit queue full");
                         }
+                        transmitUtil.timeDelay(1000);
                     }
                 }).start();
             } catch (ModemException me) {
-                new AlertDialog.Builder(this)
+                new AlertDialog.Builder(context)
                         .setTitle(R.string.error)
-                        .setMessage("Unfortunately your device does not support modulation")
+                        .setIcon(R.drawable.ic_error_outline_black_24px)
+                        .setMessage(R.string.modem_exception)
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, (dialog,which) ->
                         {
@@ -84,10 +89,9 @@ public class TransmitActivity extends AppCompatActivity {
     }
 
     public void stopBroadcast(View view){
-        Intent mainIntent = new Intent(this, signInActivity.class);
-        startActivity(mainIntent);
-        finish();
+        activityUtil.goToSignIn();
     }
+
     public void onDestroy() {
         super.onDestroy();
         finish();
@@ -96,14 +100,5 @@ public class TransmitActivity extends AppCompatActivity {
     public void onPause(){
         super.onPause();
         finish();
-    }
-    private void hideKeyboard () {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-        }
-
-    private void changeVolume(){
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 30, 0);
     }
 }

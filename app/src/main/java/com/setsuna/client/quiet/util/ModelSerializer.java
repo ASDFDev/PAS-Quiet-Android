@@ -1,4 +1,4 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.util;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -32,7 +32,7 @@ public class ModelSerializer {
         return attendance_code;
     }
 
-    void setDatabase(String device_id, String username, String attendance_code){
+    public void setDatabase(String device_id, String username, String attendance_code){
         this.device_id = device_id;
         this.username = username;
         this.attendance_code = attendance_code;

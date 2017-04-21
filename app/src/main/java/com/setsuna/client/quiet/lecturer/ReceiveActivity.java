@@ -1,10 +1,9 @@
-package com.setsuna.client.quiet;
+package com.setsuna.client.quiet.lecturer;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.nio.charset.Charset;
@@ -22,28 +21,34 @@ import rx.subscriptions.Subscriptions;
 import android.provider.Settings.Secure;
 import android.widget.Toast;
 
+import com.setsuna.client.quiet.util.ActivityUtil;
+import com.setsuna.client.quiet.util.FrameReceiverObservable;
+import com.setsuna.client.quiet.util.ModelSerializer;
+import com.setsuna.client.quiet.R;
 import com.setsuna.client.quiet.util.AccountManager;
 import com.setsuna.client.quiet.util.ApiManager;
 import com.setsuna.client.quiet.util.PermissionManager;
+import com.setsuna.client.quiet.util.ReceiveUtil;
 
 
 public class ReceiveActivity extends AppCompatActivity {
 
     private Subscription frameSubscription = Subscriptions.empty();
-
+    private Context context;
+    private ReceiveUtil receiveUtil = new ReceiveUtil(context);
+    private PermissionManager permissionManager = new PermissionManager(context);
+    private ActivityUtil activityUtil = new ActivityUtil(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_receive);
         super.onCreate(savedInstanceState);
-        askPermission();
-    }
-
-    private void askPermission(){
-        PermissionManager permissionManager = new PermissionManager(this);
         permissionManager.showPermission();
     }
 
+    public ReceiveActivity(Context context){
+        this.context = context;
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -55,15 +60,13 @@ public class ReceiveActivity extends AppCompatActivity {
                     subscribeToFrames();
                 } else {
                     Toast.makeText(this, R.string.no_permission, Toast.LENGTH_LONG).show();
-                    Intent signInIntent = new Intent(this, signInActivity.class);
-                    this.startActivity(signInIntent);
-
+                    activityUtil.goToSignIn();
                 }
         }
     }
 
     private void subscribeToFrames() {
-        frameSubscription = FrameReceiverObservable.create(this, "ultrasonic-experimental").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
+        frameSubscription = FrameReceiverObservable.create(this, context.getResources().getString(R.string.quiet_profile)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
 
             frameSubscription.unsubscribe();
             Retrofit retrofit = new Retrofit.Builder()
@@ -81,30 +84,11 @@ public class ReceiveActivity extends AppCompatActivity {
             databaseModelCall.enqueue(new Callback<ModelSerializer>() {
                 @Override
                 public void onResponse(Call<ModelSerializer> call, Response<ModelSerializer> response) {
-                    new AlertDialog.Builder(ReceiveActivity.this)
-                            .setTitle("Attendance submission failed!")
-                            .setMessage("You have already submitted attendance on this device")
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.ok, (dialog,which) -> {
-                                finish();
-                                Intent signInIntent = new Intent(ReceiveActivity.this,signInActivity.class);
-                                ReceiveActivity.this.startActivity(signInIntent);
-                            })
-                            .create()
-                            .show();
+                    receiveUtil.showAttendanceResults("Attendance Submission Failed!", "You have already submitted attendance on this device");
                 }
                 @Override
                 public void onFailure(Call<ModelSerializer> call, Throwable t) {
-                    new AlertDialog.Builder(ReceiveActivity.this)
-                            .setTitle("Attendance Submitted!")
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.ok, (dialog,which) -> {
-                                finish();
-                                Intent signInIntent = new Intent(ReceiveActivity.this,signInActivity.class);
-                                ReceiveActivity.this.startActivity(signInIntent);
-                            })
-                            .create()
-                            .show();
+                    receiveUtil.showAttendanceResults("Attendance Submitted!" , "");
                 }
             });
         }, error-> {
