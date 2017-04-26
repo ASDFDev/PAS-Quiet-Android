@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.setsuna.client.quiet.util.AccountManager;
+import com.setsuna.client.quiet.util.manager.AccountManager;
 import com.setsuna.client.quiet.util.CheckBackend;
 
 public class signInActivity extends AppCompatActivity{
-    private Context context;
 
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

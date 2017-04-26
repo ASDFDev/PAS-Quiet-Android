@@ -12,7 +12,6 @@ import com.setsuna.client.quiet.student.TransmitActivity;
 public class ActivityUtil {
 
     private Context context;
-    private Activity activity;
 
     public ActivityUtil(Context context){
         this.context = context;
@@ -21,19 +20,19 @@ public class ActivityUtil {
     public void goToSignIn(){
         Intent signInIntent = new Intent(context, signInActivity.class);
         context.startActivity(signInIntent);
-        activity.finish();
+        ((Activity)context).finish();
     }
 
     public void goToTransmit(){
         Intent transmitIntent = new Intent(context, TransmitActivity.class);
         context.startActivity(transmitIntent);
-        activity.finish();
+        ((Activity)context).finish();
     }
 
     public void goToReceive(){
         Intent receiveIntent = new Intent(context, ReceiveActivity.class);
         context.startActivity(receiveIntent);
-        activity.finish();
+        ((Activity)context).finish();
     }
 
 }

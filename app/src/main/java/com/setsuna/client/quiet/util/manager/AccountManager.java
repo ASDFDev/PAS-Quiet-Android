@@ -1,15 +1,13 @@
-package com.setsuna.client.quiet.util;
+package com.setsuna.client.quiet.util.manager;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 
 import com.setsuna.client.quiet.R;
-import com.setsuna.client.quiet.lecturer.ReceiveActivity;
-import com.setsuna.client.quiet.student.TransmitActivity;
+import com.setsuna.client.quiet.util.ActivityUtil;
 
 
 public class AccountManager extends AsyncTask<String, Integer, String> {
@@ -19,14 +17,13 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
     // Can be replaced with actual connection code
 	
     public static String loggedInUserID;
-
+    private Activity activity;
     private ProgressDialog progressDialog;
     private Context globalContext;
     private String result;
     private SignInResponse signInState;
     private SignInType signInType;
     private String connectionType;
-    private ActivityUtil activityUtil = new ActivityUtil(globalContext);
 
     public AccountManager(Context context) {
         globalContext = context;
@@ -82,6 +79,7 @@ public class AccountManager extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result1) {
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
+                ActivityUtil activityUtil = new ActivityUtil(globalContext);
 
                 if (connectionType.equals("SignInOnly")) {
                     if (signInState.equals(SignInResponse.SignedIn)) {

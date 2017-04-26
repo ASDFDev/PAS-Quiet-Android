@@ -1,4 +1,4 @@
-package com.setsuna.client.quiet.util;
+package com.setsuna.client.quiet.util.manager;
 
 
 import android.Manifest;

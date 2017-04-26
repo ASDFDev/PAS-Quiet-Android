@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingBottom="16dp"
-        android:text="Searching for lecturer device"
+        android:text="Searching for students' device"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

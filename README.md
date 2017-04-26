@@ -1,10 +1,6 @@
-# ATS_Nearby_Reboot
-
-`Because, I can't think of a better name and since it's a partial fork of the previous project`
-
 ## Background Information
  
-The project was written to combat attendance fraud in Singapore Polytechnic. Every the start of every lesson, the lecturer will generate a One Time Pin(OTP) and display it on the projector in plain text. Students will then submit the OTP to a HRMS portal and they will be marked present for the lesson. Obviously this is flawed since students are able to help submit the attendance code for their friends by sharing their account credentials. Lecturers will waste time occasionally by checking for fraud. It defeats the purpose of marking the attendance electronically. Instead of doing nothing but complain and whine or making a useless [petition](https://www.change.org/p/mr-tan-choon-shian-ms-georgina-phua-stopspatssystem), why not do something about it?
+Check out [this link](https://asdfdev.github.io/background_info.html) for more info
  
 ## About This Project
 
@@ -23,7 +19,7 @@ $ repo init -u git@github.com:Proximity-Attendance-System/Repo-Manifest.git && r
 
 Advance:
 1. Download this repo
-2. Download Quiet(msequence_ordering) `git clone https://github.com/quiet/org.quietmodem.Quiet.git -b msequence_ordering`
+2. Download Quiet(msequence_ordering) `git clone https://github.com/asdf/org.quietmodem.Quiet.git -b msequence_ordering`
 
 Place Quiet in the following hierarchy order. `../../quiet/android/quiet` **OR** edit [settings.gradle](settings.gradle)
 

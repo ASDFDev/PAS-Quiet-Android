@@ -1,4 +1,6 @@
-package com.setsuna.client.quiet.util;
+package com.setsuna.client.quiet.util.manager;
+
+import com.setsuna.client.quiet.util.ModelSerializer;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

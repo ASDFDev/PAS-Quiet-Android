@@ -1,9 +1,12 @@
 package com.setsuna.client.quiet.lecturer;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.nio.charset.Charset;
@@ -25,34 +28,29 @@ import com.setsuna.client.quiet.util.ActivityUtil;
 import com.setsuna.client.quiet.util.FrameReceiverObservable;
 import com.setsuna.client.quiet.util.ModelSerializer;
 import com.setsuna.client.quiet.R;
-import com.setsuna.client.quiet.util.AccountManager;
-import com.setsuna.client.quiet.util.ApiManager;
-import com.setsuna.client.quiet.util.PermissionManager;
-import com.setsuna.client.quiet.util.ReceiveUtil;
+import com.setsuna.client.quiet.util.manager.AccountManager;
+import com.setsuna.client.quiet.util.manager.ApiManager;
+import com.setsuna.client.quiet.util.manager.PermissionManager;
 
 
 public class ReceiveActivity extends AppCompatActivity {
 
+    private Activity activity;
     private Subscription frameSubscription = Subscriptions.empty();
     private Context context;
-    private ReceiveUtil receiveUtil = new ReceiveUtil(context);
-    private PermissionManager permissionManager = new PermissionManager(context);
-    private ActivityUtil activityUtil = new ActivityUtil(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_receive);
         super.onCreate(savedInstanceState);
+        PermissionManager permissionManager = new PermissionManager(this);
         permissionManager.showPermission();
     }
 
-    public ReceiveActivity(Context context){
-        this.context = context;
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,@NonNull String permissions[], @NonNull int[] grantResults) {
         final int REQUEST_PERMISSION_RECORD_AUDIO = 1;
+        ActivityUtil activityUtil = new ActivityUtil(this);
         super.onRequestPermissionsResult(requestCode,permissions,grantResults);
         switch (requestCode) {
             case REQUEST_PERMISSION_RECORD_AUDIO:
@@ -66,8 +64,7 @@ public class ReceiveActivity extends AppCompatActivity {
     }
 
     private void subscribeToFrames() {
-        frameSubscription = FrameReceiverObservable.create(this, context.getResources().getString(R.string.quiet_profile)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
-
+        frameSubscription = FrameReceiverObservable.create(ReceiveActivity.this, this.getResources().getString(R.string.quiet_profile)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(buf -> {
             frameSubscription.unsubscribe();
             Retrofit retrofit = new Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
@@ -84,15 +81,25 @@ public class ReceiveActivity extends AppCompatActivity {
             databaseModelCall.enqueue(new Callback<ModelSerializer>() {
                 @Override
                 public void onResponse(Call<ModelSerializer> call, Response<ModelSerializer> response) {
-                    receiveUtil.showAttendanceResults("Attendance Submission Failed!", "You have already submitted attendance on this device");
+                    showAttendanceResults("Attendance Submission Failed!", "You have already submitted attendance on this device");
                 }
                 @Override
                 public void onFailure(Call<ModelSerializer> call, Throwable t) {
-                    receiveUtil.showAttendanceResults("Attendance Submitted!" , "");
+                    showAttendanceResults("Attendance Submitted!" , "");
                 }
             });
         }, error-> {
         });
+    }
+
+    private void showAttendanceResults(String title, String message){
+        ActivityUtil activityUtil = new ActivityUtil(context);
+        new AlertDialog.Builder(ReceiveActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog,which) -> activityUtil.goToSignIn())
+                .create()
+                .show();
     }
 
 }
