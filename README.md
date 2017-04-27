@@ -1,6 +1,6 @@
 ## Background Information
  
-Check out [this link](https://asdfdev.github.io/background_info.html) for more info
+Check out [this link](https://asdfdev.github.io/background.html) for more info
  
 ## About This Project
 
@@ -8,7 +8,7 @@ This project was a forked of our previous project[(ATS_Nearby)](https://github.c
 
 > to build the software with compatability in mind
 
-In theory, this software should be able to run on Amazon Fire devices or any non-certified [GMS devices](https://www.android.com/gms/). The web version written in Javascript is coming soon. This sofware has also moved away from Firebase's BaaS to a self hosted BaaS instance. This allows the user / organization to better control the data flowing out of the network. 
+In theory, this software should be able to run on Amazon Fire devices or any non-certified [GMS devices](https://www.android.com/gms/). This sofware has also moved away from Firebase's BaaS to a self hosted BaaS instance. This allows the user / organization to better control the data flowing out of the network. 
 
 ## How to get this project running on my device?!
 
@@ -32,3 +32,5 @@ Personally, I am using [Pi-hole](https://pi-hole.net/) as my DNS server. I simpl
 That's it. 
 
 Special thanks to Mr. Teo Shin Jen my lecturer for guidance in this project. Let's not forget about Mr. Brian Armstrong for quiet library, which was essential for the project.
+
+
